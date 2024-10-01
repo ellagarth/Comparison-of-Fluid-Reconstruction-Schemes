@@ -1,0 +1,19 @@
+#for debugging
+FC = gfortran -O0 -fdefault-real-8 -fcheck=all -fbacktrace
+
+#optimised version
+#FC = gfortran -O2 -fdefault-real-8 -fcheck=all -fbacktrace
+
+SRC=advec.f90 output.f90
+OBJ=${SRC:.f90=.o}
+
+advec.x: $(OBJ)
+	$(FC) -o advec.x $(OBJ)
+
+%.o: %.f90
+	$(FC) $(FFLAGS) -o $@ -c $<
+
+advec.o: output.o
+
+clean:
+	rm -fr *.o *.mod advec.x
