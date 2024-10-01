@@ -6,7 +6,7 @@ PROGRAM advection
 
   INTEGER, PARAMETER :: nx = 100
   INTEGER, PARAMETER :: mode = 0 ! 0: square wave, 1: sine wave
-  INTEGER, PARAMETER :: recon = 4 ! 0: upwind, 1: central (Fromm), 2: right slopes, 3: left slopes (Beam-Warming), 4: minmod, 5: van Leer, 6: MC
+  INTEGER, PARAMETER :: recon = 4 ! 0: upwind (Godunov), 1: central (Fromm), 2: right slopes (Lax-Wendroff), 3: left slopes (Beam-Warming), 4: minmod, 5: van Leer, 6: MC
   CHARACTER (LEN=4) ::  slopemethod = 'min3'
   REAL, PARAMETER :: vel = 1.0
   REAL, PARAMETER :: cfac = 0.8 !safety (CFL) factor for time step
@@ -31,7 +31,7 @@ PROGRAM advection
      x (i) = (REAL (i)-0.5) / REAL(nx)
   END DO
   dx = 1.0 / REAL (nx)
-  
+  ! dt = timestep, cfac = courant factor, dx = spatial step, vel = velocity
   dt = cfac * dx / vel
 
   !define initial conditions
